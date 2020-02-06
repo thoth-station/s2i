@@ -1,0 +1,262 @@
+apiVersion: v1
+kind: List
+metadata:
+  resourceVersion: ""
+  selfLink: ""
+items:
+  - apiVersion: image.openshift.io/v1
+    kind: ImageStream
+    metadata:
+      annotations:
+        openshift.io/image.dockerRepositoryCheck: 2019-06-06T11:43:35Z
+      creationTimestamp: 2019-06-06T11:32:25Z
+      generation: 6
+      name: centos
+      namespace: fpokorny-thoth-dev
+      resourceVersion: "103916427"
+      selfLink: /apis/image.openshift.io/v1/namespaces/fpokorny-thoth-dev/imagestreams/centos
+      uid: c1d3e352-884e-11e9-b7f1-fa163ec229c0
+    spec:
+      lookupPolicy:
+        local: false
+      tags:
+        - annotations: null
+          from:
+            kind: DockerImage
+            name: docker.io/library/centos:7
+          generation: 6
+          importPolicy: {}
+          name: "7"
+          referencePolicy:
+            type: Source
+    status:
+      dockerImageRepository: docker-registry.default.svc:5000/fpokorny-thoth-dev/centos
+      tags:
+        - items:
+            - created: 2019-06-06T11:32:25Z
+              generation: 6
+              image: sha256:ca58fe458b8d94bc6e3072f1cfbd334855858e05e1fd633aa07cf7f82b048e66
+              tag: "7"
+  - apiVersion: image.openshift.io/v1
+    kind: ImageStream
+    metadata:
+      annotations:
+        openshift.io/image.dockerRepositoryCheck: 2019-06-06T11:43:34Z
+      creationTimestamp: 2019-06-06T11:32:23Z
+      generation: 6
+      name: f26-s2i
+      namespace: fpokorny-thoth-dev
+      resourceVersion: "103916359"
+      selfLink: /apis/image.openshift.io/v1/namespaces/fpokorny-thoth-dev/imagestreams/f26-s2i
+      uid: c0bf001b-884e-11e9-b7f1-fa163ec229c0
+    spec:
+      lookupPolicy:
+        local: false
+      tags:
+        - annotations: null
+          from:
+            kind: DockerImage
+            name: registry.fedoraproject.org/f26/s2i-base:latest
+          generation: 6
+          importPolicy: {}
+          name: latest
+          referencePolicy:
+            type: Source
+    status:
+      dockerImageRepository: docker-registry.default.svc:5000/fpokorny-thoth-dev/f26-s2i
+      tags:
+        - items:
+            - created: 2019-06-06T11:32:24Z
+              generation: 6
+              image: sha256:8da697116dd990d4d68e2aa3773249f1b3d7531a6f434fef77a81c0c98dd2d06
+              tag: latest
+  - apiVersion: image.openshift.io/v1
+    kind: ImageStream
+    metadata:
+      annotations:
+        openshift.io/image.dockerRepositoryCheck: 2019-06-06T11:43:34Z
+      creationTimestamp: 2019-06-06T11:32:24Z
+      generation: 6
+      name: python-36-centos7
+      namespace: fpokorny-thoth-dev
+      resourceVersion: "103916360"
+      selfLink: /apis/image.openshift.io/v1/namespaces/fpokorny-thoth-dev/imagestreams/python-36-centos7
+      uid: c14d22bb-884e-11e9-b7f1-fa163ec229c0
+    spec:
+      lookupPolicy:
+        local: false
+      tags:
+        - annotations: null
+          from:
+            kind: DockerImage
+            name: docker.io/centos/python-36-centos7:latest
+          generation: 6
+          importPolicy: {}
+          name: latest
+          referencePolicy:
+            type: Source
+    status:
+      dockerImageRepository: docker-registry.default.svc:5000/fpokorny-thoth-dev/python-36-centos7
+      tags:
+        - items:
+            - created: 2019-06-06T11:32:24Z
+              generation: 6
+              image: sha256:d10c46b6db436357965a96716e9f5d230d9b1a58c6db1f0c4f43c1fb1994cd79
+              tag: latest
+  - apiVersion: image.openshift.io/v1
+    kind: ImageStream
+    metadata:
+      annotations:
+        openshift.io/image.dockerRepositoryCheck: 2019-06-06T11:43:36Z
+      creationTimestamp: 2019-06-06T11:43:36Z
+      generation: 2
+      name: rabbitmq
+      namespace: fpokorny-thoth-dev
+      resourceVersion: "103916449"
+      selfLink: /apis/image.openshift.io/v1/namespaces/fpokorny-thoth-dev/imagestreams/rabbitmq
+      uid: 51adbc68-8850-11e9-b7f1-fa163ec229c0
+    spec:
+      lookupPolicy:
+        local: false
+      tags:
+        - annotations: null
+          from:
+            kind: DockerImage
+            name: docker.io/library/rabbitmq:3.7.4-management
+          generation: 2
+          importPolicy: {}
+          name: 3.7.4-management
+          referencePolicy:
+            type: Source
+    status:
+      dockerImageRepository: docker-registry.default.svc:5000/fpokorny-thoth-dev/rabbitmq
+      tags:
+        - items:
+            - created: 2019-06-06T11:43:36Z
+              generation: 2
+              image: sha256:f2ceb6f4bde3fee1bc793dc8d10c738fb4631058353d9bdec384213377cad7b4
+              tag: 3.7.4-management
+  - apiVersion: image.openshift.io/v1
+    kind: ImageStream
+    metadata:
+      annotations:
+        openshift.io/image.dockerRepositoryCheck: 2019-06-06T11:43:58Z
+      creationTimestamp: 2019-06-06T11:43:58Z
+      generation: 2
+      name: redis
+      namespace: fpokorny-thoth-dev
+      resourceVersion: "103916884"
+      selfLink: /apis/image.openshift.io/v1/namespaces/fpokorny-thoth-dev/imagestreams/redis
+      uid: 5ec8d383-8850-11e9-b7f1-fa163ec229c0
+    spec:
+      lookupPolicy:
+        local: false
+      tags:
+        - annotations: null
+          from:
+            kind: DockerImage
+            name: docker.io/library/redis:3.2.11
+          generation: 2
+          importPolicy: {}
+          name: 3.2.11
+          referencePolicy:
+            type: Source
+    status:
+      dockerImageRepository: docker-registry.default.svc:5000/fpokorny-thoth-dev/redis
+      tags:
+        - items:
+            - created: 2019-06-06T11:43:58Z
+              generation: 2
+              image: sha256:b7876fe0c77fc0fd1c04b462aa9494a049f306d3e362d770b844b221130f2c72
+              tag: 3.2.11
+  - apiVersion: image.openshift.io/v1
+    kind: ImageStream
+    metadata:
+      annotations:
+        openshift.io/image.dockerRepositoryCheck: 2020-02-07T09:42:04Z
+      creationTimestamp: 2020-02-07T09:42:04Z
+      generation: 1
+      name: s2i-thoth-ubi8-py36
+      namespace: fpokorny-thoth-dev
+      resourceVersion: "451849977"
+      selfLink: /apis/image.openshift.io/v1/namespaces/fpokorny-thoth-dev/imagestreams/s2i-thoth-ubi8-py36
+      uid: 196c091e-498e-11ea-8c4b-fa163ec229c0
+    spec:
+      lookupPolicy:
+        local: false
+      tags:
+        - annotations: null
+          from:
+            kind: DockerImage
+            name: quay.io/thoth-station/s2i-thoth-ubi8-py36:latest
+          generation: 1
+          importPolicy: {}
+          name: latest
+          referencePolicy:
+            type: Source
+    status:
+      dockerImageRepository: docker-registry.default.svc:5000/fpokorny-thoth-dev/s2i-thoth-ubi8-py36
+      tags:
+        - items:
+            - created: 2020-02-07T09:42:04Z
+              generation: 1
+              image: sha256:b4abb5d141a790ada6b07e5ac6f123195f2789dac590e691545b5bcaff255369
+              tag: latest
+  - apiVersion: image.openshift.io/v1
+    kind: ImageStream
+    metadata:
+      annotations:
+        openshift.io/generated-by: OpenShiftNewApp
+      creationTimestamp: 2019-06-06T11:43:38Z
+      generation: 1
+      labels:
+        app: selinon
+      name: selinon-api-list
+      namespace: fpokorny-thoth-dev
+      resourceVersion: "451118155"
+      selfLink: /apis/image.openshift.io/v1/namespaces/fpokorny-thoth-dev/imagestreams/selinon-api
+      uid: 52edbf82-8850-11e9-b7f1-fa163ec229c0
+    spec:
+      lookupPolicy:
+        local: false
+    status:
+      dockerImageRepository: docker-registry.default.svc:5000/fpokorny-thoth-dev/selinon-api
+      tags:
+        - items:
+            - created: 2020-02-06T23:53:59Z
+              generation: 1
+              image: sha256:d71825b8d5096f043767e2ef9052a7a1ac7c7c61aa306d74d47f59bdbd25016d
+            - created: 2019-06-06T11:58:14Z
+              generation: 1
+              image: sha256:7958d630d9cae16c708e64520437fa7309f29c015bd892aaf2212455f0a2b0a8
+            - created: 2019-06-06T11:46:58Z
+              generation: 1
+              image: sha256:7fcefc76e6f595c79ce895f7ae767e3d98cb02521b610648ea54d28dc3a69555
+              tag: latest
+  - apiVersion: image.openshift.io/v1
+    kind: ImageStream
+    metadata:
+      annotations:
+        openshift.io/generated-by: OpenShiftNewApp
+      creationTimestamp: 2019-06-06T11:43:40Z
+      generation: 1
+      labels:
+        app: selinon
+      name: worker-list
+      namespace: fpokorny-thoth-dev
+      resourceVersion: "451118395"
+      selfLink: /apis/image.openshift.io/v1/namespaces/fpokorny-thoth-dev/imagestreams/worker
+      uid: 54447377-8850-11e9-b7f1-fa163ec229c0
+    spec:
+      lookupPolicy:
+        local: false
+    status:
+      dockerImageRepository: docker-registry.default.svc:5000/fpokorny-thoth-dev/worker
+      tags:
+        - items:
+            - created: 2020-02-06T23:54:10Z
+              generation: 1
+              image: sha256:4d17bbab972a86dc73cf5ca9e8c4b33b8d7c4a53745581e8a1bfa137c51f9cff
+            - created: 2019-06-06T11:47:07Z
+              generation: 1
+              image: sha256:cd3a0aec59a26fe35f7936a45fa387ff8fb22bc6fddb7f841f2a6868f1225e6b

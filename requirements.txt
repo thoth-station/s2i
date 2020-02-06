@@ -1,0 +1,6 @@
+click
+requests
+daiquiri
+pyyaml
+termcolor
+attrs

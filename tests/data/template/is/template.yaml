@@ -1,0 +1,26 @@
+apiVersion: v1
+kind: Template
+metadata:
+  name: adviser-buildconfig
+
+objects:
+  - apiVersion: image.openshift.io/v1
+    kind: ImageStream
+    metadata:
+      labels:
+        app: selinon
+      name: selinon-api-template-1
+      namespace: fpokorny-thoth-dev
+    spec:
+      lookupPolicy:
+        local: false
+  - apiVersion: image.openshift.io/v1
+    kind: ImageStream
+    metadata:
+      labels:
+        app: selinon
+      name: selinon-api-template-2
+      namespace: fpokorny-thoth-dev
+    spec:
+      lookupPolicy:
+        local: false

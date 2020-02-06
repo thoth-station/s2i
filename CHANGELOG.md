@@ -1,7 +1,7 @@
-# Changelog for Thoth's Template GitHub Project
+# Changelog for Thoth's s2i
 
-## [0.1.0] - 2019-Sep-11 - goern
+## [0.0.1] - 2020-02-08 - fridex
 
 ### Added
 
-all the things that you see...
+Initial project import.

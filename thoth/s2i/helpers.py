@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
-# project template
-# Copyright(C) 2010 Red Hat, Inc.
+# thoth-s2i
+# Copyright(C) 2020 Fridolin Pokorny
 #
 # This program is free software: you can redistribute it and / or modify
 # it under the terms of the GNU General Public License as published by
@@ -15,6 +15,17 @@
 # You should have received a copy of the GNU General Public License
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 
-"""This file carries the version of the template project."""
+"""Helpers used in thoth-s2i library."""
 
-__version__ = "0.1.0"
+from typing import Any
+from typing import List
+import logging
+import subprocess
+
+_LOGGER = logging.getLogger(__name__)
+
+
+def _subprocess_run(args: List[str], **kwargs: Any) -> Any:
+    """Run the given command as a subprocess - a thin wrapper."""
+    _LOGGER.debug("Executing command %r with subprocess flags %r", args, kwargs)
+    return subprocess.run(args, universal_newlines=True, **kwargs)

@@ -1,0 +1,36 @@
+apiVersion: v1
+kind: Template
+metadata:
+  name: adviser-buildconfig
+
+objects:
+  - apiVersion: v1
+    kind: BuildConfig
+    metadata:
+      labels:
+        app: thoth
+        component: adviser
+      name: adviser-bc
+    spec:
+      output:
+        to:
+          kind: ImageStreamTag
+          name: "adviser:${IMAGE_STREAM_TAG}"
+      source:
+        git:
+          uri: ${GITHUB_URL}
+          ref: ${GITHUB_REF}
+        type: Git
+      strategy:
+        type: Source
+        sourceStrategy:
+          from:
+            kind: ImageStreamTag
+            name: s2i-thoth-ubi8-py36:latest
+      triggers:
+        - imageChange: {}
+          type: ImageChange
+        - type: "Generic"
+          generic:
+            secretReference:
+              name: generic-webhook-secret
