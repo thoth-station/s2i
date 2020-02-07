@@ -4,27 +4,28 @@ thoth-s2i
 Tooling and a library for Thoth's Python Source-To-Image (s2i) applications.
 
 This application can assist you to port an existing application to Thoth or
-expose information about
+expose information about build configs used within the cluster.
 
 How to migrate an existing Python s2i application to use Thoth
 ==============================================================
 
 If you have a Python application that uses OpenShift s2i and you would like
-to benefit from Thoth's recommendations, you can simply port all you OpenShift
-by executing the following command after installing thoth-s2i:
+to benefit from Thoth's recommendations, you can simply port all your OpenShift
+templates by executing the following command after installing
+`thoth-s2i <https://pypi.org/project/thoth-s2i>`_:
 
 .. code-block:: console
 
   thoth-s2i patch --s2i-thoth quay.io/thoth-station/s2i-thoth-ubi8-py36 --insert-env-var path/to/openshift/templates
 
 The command above will look for all the templates present in the supplied
-directory and will take a look at build configs used. If the build config
+directory and will load build configs used. If a build config
 uses an s2i image stream, it will simply replace it with Thoth's s2i.
 
 See ``--help`` for more available options and configuration options.
 
 If the application is already deployed, you can check what image streams are
-used by build configs in the namespace where you application is built:
+used by build configs in the namespace where your application is built:
 
 .. code-block:: console
 
@@ -48,7 +49,7 @@ latest Thoth's equivalent UBI 8 image. Besides that, it will inject environment
 variables needed for Thoth to properly build and configure OpenShift's build
 process.
 
-Once you review changes done (they are printed to stdout/stderr), you can
+Once you review the changes done (they are printed to stdout/stderr), you can
 actually perform this operation in the cluster:
 
 .. code-block:: console
@@ -78,7 +79,7 @@ Get information about BuildConfig configuration in the cluster
 ==============================================================
 
 To get information about BuildConfig configuration and image stream
-configuration within cluster, run the following command:
+configuration within the namespace, run the following command:
 
 .. code-block:: console
 
