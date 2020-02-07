@@ -1,0 +1,25 @@
+apiVersion: image.openshift.io/v1
+kind: ImageStream
+metadata:
+  annotations:
+    openshift.io/generated-by: OpenShiftNewApp
+  creationTimestamp: 2019-06-06T11:43:38Z
+  generation: 1
+  labels:
+    app: selinon
+  name: selinon-api-is
+  namespace: fpokorny-thoth-dev
+  resourceVersion: "451118155"
+  selfLink: /apis/image.openshift.io/v1/namespaces/fpokorny-thoth-dev/imagestreams/selinon-api
+  uid: 52edbf82-8850-11e9-b7f1-fa163ec229c0
+spec:
+  lookupPolicy:
+    local: false
+status:
+  dockerImageRepository: docker-registry.default.svc:5000/fpokorny-thoth-dev/selinon-api
+  tags:
+    - items:
+        - created: 2019-06-06T11:46:58Z
+          generation: 1
+          image: sha256:7fcefc76e6f595c79ce895f7ae767e3d98cb02521b610648ea54d28dc3a69555
+          tag: latest
