@@ -9,3 +9,19 @@ runtime_environments:
       version: "8"
     python_version: "3.6"
     recommendation_type: latest
+
+managers:
+  - name: info
+  - name: update
+    configuration:
+      labels: [bot]
+  - name: version
+    configuration:
+      maintainers:
+        - harshad16
+        - goern
+        - fridex
+      assignees:
+        - sesheta
+      labels: [bot]
+      changelog_file: false
