@@ -279,7 +279,6 @@ class BuildConfig(OpenShiftObject):
         "THAMOS_VERBOSE": "0",
         "THAMOS_FORCE": "0",
         "THAMOS_DEBUG": "0",
-        "THAMOS_CONFIG_TEMPLATE": ".thoth.yaml",
         "THAMOS_CONFIG_EXPAND_ENV": "0",
         "THAMOS_NO_PROGRESSBAR": "1",
         "THAMOS_NO_INTERACTIVE": "1",
