@@ -282,6 +282,7 @@ class BuildConfig(OpenShiftObject):
         "THAMOS_CONFIG_EXPAND_ENV": "0",
         "THAMOS_NO_PROGRESSBAR": "1",
         "THAMOS_NO_INTERACTIVE": "1",
+        "THAMOS_REQUIREMENTS_FORMAT": "pipenv",
         "THAMOS_DEV": "0",
     }
 
