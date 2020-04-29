@@ -246,7 +246,11 @@ def get_build_usage_report(
             if tag_record.get("name") == is_tag:
                 image_record = tag_record.get("from", {}).get("name")
                 if image_record:
-                    image, tag = image_record.rsplit(":", maxsplit=1)
+                    parts = image_record.rsplit(":", maxsplit=1)
+                    if len(parts) == 2:
+                        image, tag = parts
+                    else:
+                        image, tag = image_record, "latest"
                     report_dict[build_config.name]["s2i_image_tag"] = tag
                     report_dict[build_config.name]["s2i_image_name"] = image
                 else:
