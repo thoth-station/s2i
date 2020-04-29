@@ -17,7 +17,7 @@
 
 """A library and tooling around Thoth's s2i."""
 
-__version__ = "0.1.0"
+__version__ = "0.1.1"
 __author__ = "Fridolin Pokorny <fridolin.pokorny@gmail.com>"
 
 from .exceptions import ImportImageError
