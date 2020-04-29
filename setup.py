@@ -82,4 +82,5 @@ setup(
     zip_safe=False,
     install_requires=get_install_requires(),
     cmdclass={"test": Test},
+    long_description_content_type="text/x-rst",
 )
