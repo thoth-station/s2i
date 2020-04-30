@@ -128,7 +128,11 @@ def import_image(
         thoth_images = get_thoth_s2i_images()
         error = False
         for image_name in image_names:
-            image_name, image_tag = image_name.rsplit(":", maxsplit=1)
+            parts = image_name.rsplit(":", maxsplit=1)
+            if len(parts) == 2:
+                # Discard the image tag.
+                image_name = parts[0]
+
             if image_name not in thoth_images:
                 _LOGGER.error(
                     "Image %r not found in Thoth's images, available are: %s",
