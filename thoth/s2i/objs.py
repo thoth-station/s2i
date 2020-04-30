@@ -376,7 +376,12 @@ class BuildConfig(OpenShiftObject):
         if "env" not in source_strategy:
             source_strategy["env"] = []
 
-        for thoth_env_name, thoth_env_value in self._THOTH_ENV_VARS_DEFAULTS.items():
+        supplied_env = {
+            k: v for k, v in os.environ.items() if k.startswith(("THOTH_", "THAMOS_"))
+        }
+        env_configuration = dict(self._THOTH_ENV_VARS_DEFAULTS)
+        env_configuration.update(supplied_env)
+        for thoth_env_name, thoth_env_value in env_configuration.items():
             for env_entry in source_strategy["env"]:
                 if env_entry["name"] == thoth_env_name:
                     break
