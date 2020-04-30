@@ -426,7 +426,9 @@ def patch(
     show_default=True,
     is_flag=True,
     default=False,
-    help="Insert Thoth and Thamos specific environment variables into adjusted BuildConfigs.",
+    help="Insert Thoth and Thamos specific environment variables into adjusted BuildConfigs, "
+         "environment variables can be also picked from the process environment - they start with "
+         "THAMOS_ or THOTH_ prefix.",
 )
 @click.option(
     "--from-image-stream-tag",
