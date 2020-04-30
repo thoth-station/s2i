@@ -269,8 +269,8 @@ class BuildConfig(OpenShiftObject):
     """A wrapper for BuildConfig representation."""
 
     _THOTH_ENV_VARS_DEFAULTS = {
-        "ENABLE_PIPENV": "1",
         "UPGRADE_PIP_TO_LATEST": "",
+        "DISABLE_SETUP_PY_PROCESSING": "",
         "THOTH_DRY_RUN": "0",
         "THOTH_ADVISE": "1",
         "THOTH_ASSEMBLE_DEBUG": "1",
