@@ -168,7 +168,7 @@ To install thoth-s2i library issue one of the following commands:
   pip3 install git+https://github.com/thoth-station/thoth-s2i@master
 
 See hosted project on `PyPI <https://pypi.org/project/thoth-s2i>`_ and sources
-on `GitHub <https://pypi.org/project/thoth-s2i>`_.
+on `GitHub <https://github.com/thoth-station/s2i>`_.
 
 
 Running from Git
@@ -178,7 +178,7 @@ To run this utility from Git master branch, run the following commands:
 
 .. code-block:: console
 
-  git clone https://github.com/thoth-station/thoth-s2i
-  cd thoth-s2i
+  git clone https://github.com/thoth-station/s2i
+  cd s2i
   pipenv install --dev
   PYTHONPATH=. pipenv run python3 ./thoth-s2i --help
