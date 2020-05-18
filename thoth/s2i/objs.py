@@ -58,9 +58,7 @@ class OpenShiftObject:
         raise NotImplementedError
 
     @classmethod
-    def load_all(
-        cls, path: str, skip_errors: bool = True
-    ) -> Mapping[str, "OpenShiftObject"]:
+    def load_all(cls, path: str, skip_errors: bool = True) -> Mapping[str, "OpenShiftObject"]:
         """Load the given OpenShift object from a file or files present in a directory, recursively."""
         if os.path.isfile(path):
             return cls.load_file(path)
@@ -71,19 +69,14 @@ class OpenShiftObject:
         result: Dict[str, "OpenShiftObject"] = {}
         for root, _, files in os.walk(path, followlinks=True):
             for file in files:
-                instances = cls.load_file(
-                    os.path.join(root, file), skip_errors=skip_errors
-                )
+                instances = cls.load_file(os.path.join(root, file), skip_errors=skip_errors)
                 for instance in instances.values():
                     if instance.name in result:
                         if not skip_errors:
-                            raise S2I2ThothException(
-                                f"Multiple definitions of {instance.name!r} found"
-                            )
+                            raise S2I2ThothException(f"Multiple definitions of {instance.name!r} found")
 
                         _LOGGER.warning(
-                            f"Multiple definitions of %r found, skipping...",
-                            instance.name,
+                            f"Multiple definitions of %r found, skipping...", instance.name,
                         )
                         continue
 
@@ -112,17 +105,13 @@ class OpenShiftObject:
         content = None
         try:
             with open(path, "r") as input_file:
-                content = yaml.load(
-                    input_file, Loader=_NoDatesSafeLoader
-                )  # use BaseLoader not to parse datetime.
+                content = yaml.load(input_file, Loader=_NoDatesSafeLoader)  # use BaseLoader not to parse datetime.
         except Exception as exc:
             if not skip_errors:
                 raise
 
             _LOGGER.warning(
-                "Failed to load and/or parse file %r, the file will be skipped: %s:",
-                path,
-                str(exc),
+                "Failed to load and/or parse file %r, the file will be skipped: %s:", path, str(exc),
             )
 
         if content is None:
@@ -139,8 +128,7 @@ class OpenShiftObject:
                 )
 
             _LOGGER.warning(
-                "File %r holds a string, does not look like OpenShift YAML/JSON template",
-                path,
+                "File %r holds a string, does not look like OpenShift YAML/JSON template", path,
             )
             return None
 
@@ -186,14 +174,10 @@ class OpenShiftObject:
 
             if not obj.get("metadata", {}).get("name"):
                 if not skip_errors:
-                    raise S2I2ThothException(
-                        f"No name provided in object found in {path!r}: %s", content
-                    )
+                    raise S2I2ThothException(f"No name provided in object found in {path!r}: %s", content)
 
                 _LOGGER.error(
-                    "No name provided in object found in %r: %s, skipping...",
-                    path,
-                    content,
+                    "No name provided in object found in %r: %s, skipping...", path, content,
                 )
                 continue
 
@@ -212,9 +196,7 @@ class OpenShiftObject:
                 )
                 continue
 
-            _LOGGER.info(
-                "Found %r of kind %r in %r", obj["metadata"]["name"], kind, path
-            )
+            _LOGGER.info("Found %r of kind %r in %r", obj["metadata"]["name"], kind, path)
             result[obj["metadata"]["name"]] = class_(file_path=path, raw=obj)
 
         return result
@@ -235,10 +217,7 @@ class OpenShiftObject:
         """Apply changes to the cluster."""
         _LOGGER.info("Applying changes made to %r to the cluster", self.name)
         subcommand = _subprocess_run(
-            ["oc", "apply", "-f", "-"],
-            input=self.to_yaml(),
-            stdout=subprocess.PIPE,
-            stderr=subprocess.PIPE,
+            ["oc", "apply", "-f", "-"], input=self.to_yaml(), stdout=subprocess.PIPE, stderr=subprocess.PIPE,
         )
 
         if subcommand.returncode != 0:
@@ -342,7 +321,7 @@ class BuildConfig(OpenShiftObject):
         subcommand = _subprocess_run(
             ["oc", "start-build", "-n", self.raw["metadata"]["namespace"], self.name],
             stdout=subprocess.PIPE,
-            stderr=subprocess.PIPE
+            stderr=subprocess.PIPE,
         )
 
         if subcommand.returncode != 0:
@@ -376,9 +355,7 @@ class BuildConfig(OpenShiftObject):
         if "env" not in source_strategy:
             source_strategy["env"] = []
 
-        supplied_env = {
-            k: v for k, v in os.environ.items() if k.startswith(("THOTH_", "THAMOS_"))
-        }
+        supplied_env = {k: v for k, v in os.environ.items() if k.startswith(("THOTH_", "THAMOS_"))}
         env_configuration = dict(self._THOTH_ENV_VARS_DEFAULTS)
         env_configuration.update(supplied_env)
         for thoth_env_name, thoth_env_value in env_configuration.items():
@@ -386,7 +363,6 @@ class BuildConfig(OpenShiftObject):
                 if env_entry["name"] == thoth_env_name:
                     break
             else:
-                source_strategy["env"].append({
-                    "name": thoth_env_name,
-                    "value": thoth_env_value,
-                })
+                source_strategy["env"].append(
+                    {"name": thoth_env_name, "value": thoth_env_value}
+                )

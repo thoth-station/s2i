@@ -71,9 +71,7 @@ def version() -> None:
 
 
 @cli.command("import-image")
-@click.argument(
-    "image_names", required=False, metavar="THOTH_S2I_IMAGE_NAME:TAG", nargs=-1
-)
+@click.argument("image_names", required=False, metavar="THOTH_S2I_IMAGE_NAME:TAG", nargs=-1)
 @click.option(
     "--namespace",
     "-n",
@@ -101,28 +99,21 @@ def version() -> None:
     default=True,
     help="Check the given image for availability in Thoth's s2i registry.",
 )
-def import_image(
-    image_names: List[str], namespace: str, all_images: bool, check_s2i_thoth: bool
-) -> None:
+def import_image(image_names: List[str], namespace: str, all_images: bool, check_s2i_thoth: bool) -> None:
     """Import Thoth image into an OpenShift deployment."""
     if all_images and image_names:
-        _LOGGER.error(
-            "Cannot import all images if one or multiple image names were explicitly provided"
-        )
+        _LOGGER.error("Cannot import all images if one or multiple image names were explicitly provided")
         sys.exit(1)
 
     if not (all_images or image_names):
         _LOGGER.error(
-            "No image to import provided, state the image name explicitly or use --all-latest for importing all Thoth images with latest tag"
+            "No image to import provided, state the image name explicitly or use --all-latest "
+            "for importing all Thoth images with latest tag"
         )
         sys.exit(1)
 
     if not (image_names or all_images):
-        image_names = [
-            click.prompt(
-                "Choose Thoth image to be imported", default=_DEFAULT_S2I_THOTH
-            )
-        ]
+        image_names = [click.prompt("Choose Thoth image to be imported", default=_DEFAULT_S2I_THOTH)]
 
     if image_names and check_s2i_thoth:
         thoth_images = get_thoth_s2i_images()
@@ -135,9 +126,7 @@ def import_image(
 
             if image_name not in thoth_images:
                 _LOGGER.error(
-                    "Image %r not found in Thoth's images, available are: %s",
-                    image_name,
-                    thoth_images,
+                    "Image %r not found in Thoth's images, available are: %s", image_name, thoth_images,
                 )
                 error = True
 
@@ -259,13 +248,7 @@ def report(namespace: str, selector: str, output_format: str) -> None:
     help="Check the given image for availability in Thoth's s2i registry.",
 )
 @click.option(
-    "--tag",
-    "-t",
-    "tag",
-    required=True,
-    show_default=True,
-    default="latest",
-    help="Image stream tag to be used.",
+    "--tag", "-t", "tag", required=True, show_default=True, default="latest", help="Image stream tag to be used.",
 )
 @click.option(
     "--insert-env-vars/--no-insert-env-vars",
@@ -285,7 +268,7 @@ def report(namespace: str, selector: str, output_format: str) -> None:
     type=str,
     default=".*python.*",
     help="A regular expression describing image stream tag that should be "
-         "substituted with Thoth s2i image (a full match is applied).",
+    "substituted with Thoth s2i image (a full match is applied).",
 )
 def patch(
     path: str,
@@ -303,9 +286,7 @@ def patch(
         thoth_images = get_thoth_s2i_images()
         if s2i_thoth not in thoth_images:
             _LOGGER.error(
-                "Image %r not found in Thoth's images, available are: %r",
-                s2i_thoth,
-                thoth_images,
+                "Image %r not found in Thoth's images, available are: %r", s2i_thoth, thoth_images,
             )
             sys.exit(1)
 
@@ -333,15 +314,11 @@ def patch(
             build_config.insert_thoth_env_vars()
             build_config.save2file()
 
-    _LOGGER.info(
-        "Patching done \\o/, total BuildConfigs patched: %d", len(changed_build_configs)
-    )
+    _LOGGER.info("Patching done \\o/, total BuildConfigs patched: %d", len(changed_build_configs))
 
     if len(changed_build_configs) > 0:
         _LOGGER.warning(
-            "Don't forget to create an image stream with image %r and tag %r",
-            s2i_thoth,
-            tag,
+            "Don't forget to create an image stream with image %r and tag %r", s2i_thoth, tag,
         )
 
 
@@ -401,13 +378,7 @@ def patch(
     help="Check the given image for availability in Thoth's s2i registry.",
 )
 @click.option(
-    "--tag",
-    "-t",
-    "tag",
-    required=True,
-    show_default=True,
-    default="latest",
-    help="Image stream tag to be used.",
+    "--tag", "-t", "tag", required=True, show_default=True, default="latest", help="Image stream tag to be used.",
 )
 @click.option(
     "--import-image/--no-import-image",
@@ -427,8 +398,8 @@ def patch(
     is_flag=True,
     default=False,
     help="Insert Thoth and Thamos specific environment variables into adjusted BuildConfigs, "
-         "environment variables can be also picked from the process environment - they start with "
-         "THAMOS_ or THOTH_ prefix.",
+    "environment variables can be also picked from the process environment - they start with "
+    "THAMOS_ or THOTH_ prefix.",
 )
 @click.option(
     "--from-image-stream-tag",
@@ -438,7 +409,7 @@ def patch(
     type=str,
     default=".*python.*",
     help="A regular expression describing image stream tag that should be "
-         "substituted with Thoth s2i image (a full match is applied).",
+    "substituted with Thoth s2i image (a full match is applied).",
 )
 def migrate(
     namespace: str,
@@ -456,17 +427,13 @@ def migrate(
 
     Adjust an existing OpenShift deployment to use Thoth by adjusting OpenShift's BuildConfigs.
     """
-    s2i_thoth = s2i_thoth or click.prompt(
-        "Choose Thoth image to be imported", default=_DEFAULT_S2I_THOTH
-    )
+    s2i_thoth = s2i_thoth or click.prompt("Choose Thoth image to be imported", default=_DEFAULT_S2I_THOTH)
 
     if check_s2i_thoth:
         thoth_images = get_thoth_s2i_images()
         if s2i_thoth not in thoth_images:
             _LOGGER.error(
-                "Image %r not found in Thoth's images, available are: %r",
-                s2i_thoth,
-                thoth_images,
+                "Image %r not found in Thoth's images, available are: %r", s2i_thoth, thoth_images,
             )
             sys.exit(1)
 
