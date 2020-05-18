@@ -502,12 +502,12 @@ def migrate(
         for build_config in changed_build_configs.values():
             build_config.apply()
 
+        if len(changed_build_configs) > 0 and do_import_image:
+            import_thoth_s2i_image(namespace, s2i_thoth)
+
         if trigger_build:
             for build_config in changed_build_configs.values():
                 build_config.trigger_build(only_if_no_config_change=True)
-
-        if len(changed_build_configs) > 0 and do_import_image:
-            import_thoth_s2i_image(namespace, s2i_thoth)
 
 
 __name__ == "__main__" and cli()
