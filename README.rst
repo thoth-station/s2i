@@ -15,7 +15,7 @@ How to migrate an existing Python s2i application to use Thoth
 If you have a Python application that uses OpenShift s2i and you would like
 to benefit from Thoth's recommendations, you can simply port all your OpenShift
 templates by executing the following command after installing
-`thoth-s2i <https://pypi.org/project/thoth-s2i>`_:
+`thoth-s2i <https://pypi.org/project/thoth-s2i>`__:
 
 .. code-block:: console
 
@@ -170,8 +170,8 @@ To install thoth-s2i library issue one of the following commands:
   # or using directly git branch:
   pip3 install git+https://github.com/thoth-station/thoth-s2i@master
 
-See hosted project on `PyPI <https://pypi.org/project/thoth-s2i>`_ and sources
-on `GitHub <https://github.com/thoth-station/s2i>`_.
+See hosted project on `PyPI <https://pypi.org/project/thoth-s2i>`__ and sources
+on `GitHub <https://github.com/thoth-station/s2i>`__.
 
 
 Running from Git
