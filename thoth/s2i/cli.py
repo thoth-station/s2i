@@ -113,7 +113,7 @@ def import_image(
 
     if not (all_images or image_names):
         _LOGGER.error(
-            "No image to import provided, state the image name explicitly or use --all for importing all Thoth images"
+            "No image to import provided, state the image name explicitly or use --all-latest for importing all Thoth images with latest tag"
         )
         sys.exit(1)
 
