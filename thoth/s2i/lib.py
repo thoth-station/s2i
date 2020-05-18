@@ -42,8 +42,7 @@ _LOGGER = logging.getLogger(__name__)
 
 _OC_CHECKED = False
 _THOTH_S2I_README = os.getenv(
-    "THOTH_S2I_README",
-    "https://raw.githubusercontent.com/thoth-station/s2i-thoth/master/README.rst",
+    "THOTH_S2I_README", "https://raw.githubusercontent.com/thoth-station/s2i-thoth/master/README.rst",
 )
 _RE_S2I = re.compile(r"quay.io/thoth-station/s2i-thoth-\S*")
 
@@ -59,9 +58,7 @@ def oc_check() -> None:
         ) from exc
 
     if oc_version.returncode != 0:
-        raise OCError(
-            f"Failed to obtain information about OpenShift client: {oc_version.stderr}"
-        )
+        raise OCError(f"Failed to obtain information about OpenShift client: {oc_version.stderr}")
 
 
 @functools.wraps(oc_check)
@@ -86,16 +83,7 @@ def _do_import_image(namespace: str, image: str, stdout: Any = None) -> None:
     imagestream_name = parts[0]
 
     subcommand = _subprocess_run(
-        [
-            "oc",
-            "import-image",
-            "--namespace",
-            namespace,
-            imagestream_name,
-            "--from",
-            image,
-            "--confirm",
-        ],
+        ["oc", "import-image", "--namespace", namespace, imagestream_name, "--from", image, "--confirm"],
         stdout=subprocess.PIPE,
         stderr=subprocess.PIPE,
     )
@@ -107,9 +95,7 @@ def _do_import_image(namespace: str, image: str, stdout: Any = None) -> None:
 
 
 @oc_check_once
-def import_thoth_s2i_image(
-    namespace: str, image: Optional[str] = None, stdout: Any = sys.stdout
-) -> None:
+def import_thoth_s2i_image(namespace: str, image: Optional[str] = None, stdout: Any = sys.stdout) -> None:
     """Import Thoth's s2i image into the given namespace."""
     if image is not None:
         _do_import_image(namespace, image, stdout=stdout)
@@ -125,25 +111,19 @@ def get_thoth_s2i_images() -> List[str]:
     try:
         response.raise_for_status()
     except Exception as exc:
-        raise S2I2ThothException(
-            "Failed to obtain Thoth's s2i images from GitHub"
-        ) from exc
+        raise S2I2ThothException("Failed to obtain Thoth's s2i images from GitHub") from exc
 
     return sorted(set(_RE_S2I.findall(response.text)), reverse=True)
 
 
 @oc_check_once
-def oc_get_bc(
-    namespace: str, selector: Optional[str] = None, path: str = "buildconfigs.yaml"
-) -> None:
+def oc_get_bc(namespace: str, selector: Optional[str] = None, path: str = "buildconfigs.yaml") -> None:
     """Get buildconfigs installed in the given namespace to the given file described by path."""
     if not os.path.isfile(path):
         try:
             Path(path).touch()
         except Exception as exc:
-            raise S2I2ThothException(
-                f"Cannot create file {path} for storing buildconfigs"
-            ) from exc
+            raise S2I2ThothException(f"Cannot create file {path} for storing buildconfigs") from exc
 
     cmd = ["oc", "get", "bc", "--namespace", namespace, "-o", "yaml"]
 
@@ -151,28 +131,20 @@ def oc_get_bc(
         cmd.extend(("-l", selector))
 
     with open(path, "w") as output_file:
-        subcommand = _subprocess_run(
-            cmd, stdout=output_file.fileno(), stderr=subprocess.PIPE
-        )
+        subcommand = _subprocess_run(cmd, stdout=output_file.fileno(), stderr=subprocess.PIPE)
 
     if subcommand.returncode != 0:
-        raise OCError(
-            f"Failed to obtain buildconfigs from namespace {namespace}: {subcommand.stderr}"
-        )
+        raise OCError(f"Failed to obtain buildconfigs from namespace {namespace}: {subcommand.stderr}")
 
 
 @oc_check_once
-def oc_get_is(
-    namespace: str, selector: Optional[str] = None, path: str = "imagestreams.yaml"
-) -> None:
+def oc_get_is(namespace: str, selector: Optional[str] = None, path: str = "imagestreams.yaml") -> None:
     """Get ImageStreams installed in the given namespace to the given file described by path."""
     if not os.path.isfile(path):
         try:
             Path(path).touch()
         except Exception as exc:
-            raise S2I2ThothException(
-                f"Cannot create file {path} for storing imagestreams"
-            ) from exc
+            raise S2I2ThothException(f"Cannot create file {path} for storing imagestreams") from exc
 
     cmd = ["oc", "get", "is", "--namespace", namespace, "-o", "yaml"]
 
@@ -180,14 +152,10 @@ def oc_get_is(
         cmd.extend(("-l", selector))
 
     with open(path, "w") as output_file:
-        subcommand = _subprocess_run(
-            cmd, stdout=output_file.fileno(), stderr=subprocess.PIPE
-        )
+        subcommand = _subprocess_run(cmd, stdout=output_file.fileno(), stderr=subprocess.PIPE)
 
     if subcommand.returncode != 0:
-        raise OCError(
-            f"Failed to obtain imagestreams from namespace {namespace}: {subcommand.stderr}"
-        )
+        raise OCError(f"Failed to obtain imagestreams from namespace {namespace}: {subcommand.stderr}")
 
 
 def get_build_usage_report(
@@ -211,17 +179,14 @@ def get_build_usage_report(
 
         if not report_dict[build_config.name]["is_s2i"]:
             _LOGGER.debug(
-                "Skipping s2i detection for %r as build strategy is not s2i",
-                build_config.name,
+                "Skipping s2i detection for %r as build strategy is not s2i", build_config.name,
             )
             continue
 
         source_strategy = build_config.get_source_strategy()
         kind = source_strategy.get("from", {}).get("kind")
         if not kind:
-            _LOGGER.error(
-                "Cannot determine kind for source strategy for %r", build_config.name
-            )
+            _LOGGER.error("Cannot determine kind for source strategy for %r", build_config.name)
             continue
 
         if kind != "ImageStreamTag":
@@ -236,9 +201,7 @@ def get_build_usage_report(
         image_stream = image_streams.get(is_name)
         if not image_stream:
             _LOGGER.error(
-                "Cannot find image stream %r used by build config %r",
-                is_name,
-                build_config.name,
+                "Cannot find image stream %r used by build config %r", is_name, build_config.name,
             )
             continue
 
@@ -255,17 +218,12 @@ def get_build_usage_report(
                     report_dict[build_config.name]["s2i_image_name"] = image
                 else:
                     _LOGGER.error(
-                        "Cannot parse image record for image stream %r tag %r",
-                        is_name,
-                        is_tag,
+                        "Cannot parse image record for image stream %r tag %r", is_name, is_tag,
                     )
                 break
         else:
             _LOGGER.error(
-                "Cannot find tag %r in image stream %r used by %r",
-                is_tag,
-                is_name,
-                build_config.name,
+                "Cannot find tag %r in image stream %r used by %r", is_tag, is_name, build_config.name,
             )
             continue
 
