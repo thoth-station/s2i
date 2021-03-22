@@ -27,3 +27,13 @@ from .lib import get_thoth_s2i_images
 from .lib import import_thoth_s2i_image
 from .lib import oc_check
 from .lib import oc_get_bc
+
+__all__ = (
+    "ImportImageError",
+    "OCError",
+    "S2I2ThothException",
+    "get_thoth_s2i_images",
+    "import_thoth_s2i_image",
+    "oc_check",
+    "oc_get_bc",
+)

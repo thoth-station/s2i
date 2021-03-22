@@ -76,7 +76,8 @@ class OpenShiftObject:
                             raise S2I2ThothException(f"Multiple definitions of {instance.name!r} found")
 
                         _LOGGER.warning(
-                            f"Multiple definitions of %r found, skipping...", instance.name,
+                            "Multiple definitions of %r found, skipping...",
+                            instance.name,
                         )
                         continue
 
@@ -111,7 +112,9 @@ class OpenShiftObject:
                 raise
 
             _LOGGER.warning(
-                "Failed to load and/or parse file %r, the file will be skipped: %s:", path, str(exc),
+                "Failed to load and/or parse file %r, the file will be skipped: %s:",
+                path,
+                str(exc),
             )
 
         if content is None:
@@ -128,7 +131,8 @@ class OpenShiftObject:
                 )
 
             _LOGGER.warning(
-                "File %r holds a string, does not look like OpenShift YAML/JSON template", path,
+                "File %r holds a string, does not look like OpenShift YAML/JSON template",
+                path,
             )
             return None
 
@@ -177,7 +181,9 @@ class OpenShiftObject:
                     raise S2I2ThothException(f"No name provided in object found in {path!r}: %s", content)
 
                 _LOGGER.error(
-                    "No name provided in object found in %r: %s, skipping...", path, content,
+                    "No name provided in object found in %r: %s, skipping...",
+                    path,
+                    content,
                 )
                 continue
 
@@ -217,7 +223,10 @@ class OpenShiftObject:
         """Apply changes to the cluster."""
         _LOGGER.info("Applying changes made to %r to the cluster", self.name)
         subcommand = _subprocess_run(
-            ["oc", "apply", "-f", "-"], input=self.to_yaml(), stdout=subprocess.PIPE, stderr=subprocess.PIPE,
+            ["oc", "apply", "-f", "-"],
+            input=self.to_yaml(),
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
         )
 
         if subcommand.returncode != 0:
@@ -363,6 +372,4 @@ class BuildConfig(OpenShiftObject):
                 if env_entry["name"] == thoth_env_name:
                     break
             else:
-                source_strategy["env"].append(
-                    {"name": thoth_env_name, "value": thoth_env_value}
-                )
+                source_strategy["env"].append({"name": thoth_env_name, "value": thoth_env_value})
