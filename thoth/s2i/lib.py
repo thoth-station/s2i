@@ -42,7 +42,8 @@ _LOGGER = logging.getLogger(__name__)
 
 _OC_CHECKED = False
 _THOTH_S2I_README = os.getenv(
-    "THOTH_S2I_README", "https://raw.githubusercontent.com/thoth-station/s2i-thoth/master/README.rst",
+    "THOTH_S2I_README",
+    "https://raw.githubusercontent.com/thoth-station/s2i-thoth/master/README.rst",
 )
 _RE_S2I = re.compile(r"quay.io/thoth-station/s2i-thoth-\S*")
 
@@ -64,6 +65,7 @@ def oc_check() -> None:
 @functools.wraps(oc_check)
 def oc_check_once(func: Callable[..., Any]) -> Callable[..., Any]:
     """Check oc binary for required functions once this library is run."""
+
     def inner(*args: Any, **kwargs: Any) -> Any:
         global _OC_CHECKED
 
@@ -179,7 +181,8 @@ def get_build_usage_report(
 
         if not report_dict[build_config.name]["is_s2i"]:
             _LOGGER.debug(
-                "Skipping s2i detection for %r as build strategy is not s2i", build_config.name,
+                "Skipping s2i detection for %r as build strategy is not s2i",
+                build_config.name,
             )
             continue
 
@@ -201,7 +204,9 @@ def get_build_usage_report(
         image_stream = image_streams.get(is_name)
         if not image_stream:
             _LOGGER.error(
-                "Cannot find image stream %r used by build config %r", is_name, build_config.name,
+                "Cannot find image stream %r used by build config %r",
+                is_name,
+                build_config.name,
             )
             continue
 
@@ -218,12 +223,17 @@ def get_build_usage_report(
                     report_dict[build_config.name]["s2i_image_name"] = image
                 else:
                     _LOGGER.error(
-                        "Cannot parse image record for image stream %r tag %r", is_name, is_tag,
+                        "Cannot parse image record for image stream %r tag %r",
+                        is_name,
+                        is_tag,
                     )
                 break
         else:
             _LOGGER.error(
-                "Cannot find tag %r in image stream %r used by %r", is_tag, is_name, build_config.name,
+                "Cannot find tag %r in image stream %r used by %r",
+                is_tag,
+                is_name,
+                build_config.name,
             )
             continue
 
@@ -239,7 +249,9 @@ def get_build_usage_report(
 
 
 def change_image_stream(
-    build_configs: Dict[str, BuildConfig], new: str, cond_func: Callable[[BuildConfig], bool],
+    build_configs: Dict[str, BuildConfig],
+    new: str,
+    cond_func: Callable[[BuildConfig], bool],
 ) -> Dict[str, BuildConfig]:
     """Change image stream in BuildConfigs based on condition."""
     result = {}

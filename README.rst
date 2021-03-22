@@ -6,7 +6,7 @@ Tooling and a library for Thoth's Python Source-To-Image (s2i) applications.
 This application can assist you to port an existing application to Thoth or
 expose information about build configs used within the cluster.
 
-Follow `online step-by-step tutorial to see this tool in action 
+Follow `online step-by-step tutorial to see this tool in action
 <https://www.youtube.com/watch?v=FtW1PAuI3nk>`__.
 
 How to migrate an existing Python s2i application to use Thoth

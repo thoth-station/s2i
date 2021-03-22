@@ -126,7 +126,9 @@ def import_image(image_names: List[str], namespace: str, all_images: bool, check
 
             if image_name not in thoth_images:
                 _LOGGER.error(
-                    "Image %r not found in Thoth's images, available are: %s", image_name, thoth_images,
+                    "Image %r not found in Thoth's images, available are: %s",
+                    image_name,
+                    thoth_images,
                 )
                 error = True
 
@@ -248,7 +250,13 @@ def report(namespace: str, selector: str, output_format: str) -> None:
     help="Check the given image for availability in Thoth's s2i registry.",
 )
 @click.option(
-    "--tag", "-t", "tag", required=True, show_default=True, default="latest", help="Image stream tag to be used.",
+    "--tag",
+    "-t",
+    "tag",
+    required=True,
+    show_default=True,
+    default="latest",
+    help="Image stream tag to be used.",
 )
 @click.option(
     "--insert-env-vars/--no-insert-env-vars",
@@ -286,7 +294,9 @@ def patch(
         thoth_images = get_thoth_s2i_images()
         if s2i_thoth not in thoth_images:
             _LOGGER.error(
-                "Image %r not found in Thoth's images, available are: %r", s2i_thoth, thoth_images,
+                "Image %r not found in Thoth's images, available are: %r",
+                s2i_thoth,
+                thoth_images,
             )
             sys.exit(1)
 
@@ -318,7 +328,9 @@ def patch(
 
     if len(changed_build_configs) > 0:
         _LOGGER.warning(
-            "Don't forget to create an image stream with image %r and tag %r", s2i_thoth, tag,
+            "Don't forget to create an image stream with image %r and tag %r",
+            s2i_thoth,
+            tag,
         )
 
 
@@ -378,7 +390,13 @@ def patch(
     help="Check the given image for availability in Thoth's s2i registry.",
 )
 @click.option(
-    "--tag", "-t", "tag", required=True, show_default=True, default="latest", help="Image stream tag to be used.",
+    "--tag",
+    "-t",
+    "tag",
+    required=True,
+    show_default=True,
+    default="latest",
+    help="Image stream tag to be used.",
 )
 @click.option(
     "--import-image/--no-import-image",
@@ -433,7 +451,9 @@ def migrate(
         thoth_images = get_thoth_s2i_images()
         if s2i_thoth not in thoth_images:
             _LOGGER.error(
-                "Image %r not found in Thoth's images, available are: %r", s2i_thoth, thoth_images,
+                "Image %r not found in Thoth's images, available are: %r",
+                s2i_thoth,
+                thoth_images,
             )
             sys.exit(1)
 
