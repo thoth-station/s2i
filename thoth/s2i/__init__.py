@@ -22,7 +22,7 @@ __author__ = "Fridolin Pokorny <fridolin.pokorny@gmail.com>"
 
 from .exceptions import ImportImageError
 from .exceptions import OCError
-from .exceptions import S2I2ThothException
+from .exceptions import S2I2ThothExceptionError as S2I2ThothException
 from .lib import get_thoth_s2i_images
 from .lib import import_thoth_s2i_image
 from .lib import oc_check

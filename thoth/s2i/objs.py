@@ -31,7 +31,7 @@ from typing import Union
 
 import attr
 
-from .exceptions import S2I2ThothException
+from .exceptions import S2I2ThothExceptionError
 from .exceptions import OCError
 from .helpers import _subprocess_run
 
@@ -64,7 +64,7 @@ class OpenShiftObject:
             return cls.load_file(path)
 
         if not os.path.isdir(path):
-            raise S2I2ThothException(f"Path {path!r} is not a file or directory")
+            raise S2I2ThothExceptionError(f"Path {path!r} is not a file or directory")
 
         result: Dict[str, "OpenShiftObject"] = {}
         for root, _, files in os.walk(path, followlinks=True):
@@ -73,7 +73,7 @@ class OpenShiftObject:
                 for instance in instances.values():
                     if instance.name in result:
                         if not skip_errors:
-                            raise S2I2ThothException(f"Multiple definitions of {instance.name!r} found")
+                            raise S2I2ThothExceptionError(f"Multiple definitions of {instance.name!r} found")
 
                         _LOGGER.warning(
                             "Multiple definitions of %r found, skipping...",
@@ -119,14 +119,14 @@ class OpenShiftObject:
 
         if content is None:
             if not skip_errors:
-                raise S2I2ThothException(f"File {path!r} has value null")
+                raise S2I2ThothExceptionError(f"File {path!r} has value null")
 
             _LOGGER.warning("File %r holds null, skipping...", path)
             return None
 
         if not isinstance(content, (list, dict)):
             if not skip_errors:
-                raise S2I2ThothException(
+                raise S2I2ThothExceptionError(
                     f"File {path!r} holds a string, does not look like OpenShift YAML/JSON template"
                 )
 
@@ -178,7 +178,7 @@ class OpenShiftObject:
 
             if not obj.get("metadata", {}).get("name"):
                 if not skip_errors:
-                    raise S2I2ThothException(f"No name provided in object found in {path!r}: %s", content)
+                    raise S2I2ThothExceptionError(f"No name provided in object found in {path!r}: %s", content)
 
                 _LOGGER.error(
                     "No name provided in object found in %r: %s, skipping...",
@@ -189,7 +189,7 @@ class OpenShiftObject:
 
             if obj["metadata"]["name"] in result:
                 if not skip_errors:
-                    raise S2I2ThothException(
+                    raise S2I2ThothExceptionError(
                         f"Duplicate name {path!r}, name already seen: {content}, seen "
                         f"in {result[obj['metadata']['name']]}"
                     )
@@ -357,7 +357,7 @@ class BuildConfig(OpenShiftObject):
         _LOGGER.info("Inserting Thoth and Thamos specific environment variables to %r", self.name)
         source_strategy = self.get_source_strategy()
         if source_strategy is None:
-            raise S2I2ThothException(
+            raise S2I2ThothExceptionError(
                 "No source strategy defined for {self.name!r}, cannot inject environment variables"
             )
 
