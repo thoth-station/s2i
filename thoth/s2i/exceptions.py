@@ -18,13 +18,13 @@
 """Exceptions within thoth-s2i library."""
 
 
-class S2I2ThothException(Exception):
+class S2I2ThothExceptionError(Exception):
     """An exception raised within s2i2thoth library."""
 
 
-class ImportImageError(S2I2ThothException):
+class ImportImageError(S2I2ThothExceptionError):
     """An exception raised on error during importing an image."""
 
 
-class OCError(S2I2ThothException):
+class OCError(S2I2ThothExceptionError):
     """An exception raised on error when calling OpenShift client binary."""

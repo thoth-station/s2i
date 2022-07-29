@@ -33,7 +33,7 @@ import sys
 
 from .exceptions import ImportImageError
 from .exceptions import OCError
-from .exceptions import S2I2ThothException
+from .exceptions import S2I2ThothExceptionError
 from .objs import ImageStream
 from .objs import BuildConfig
 from .helpers import _subprocess_run
@@ -113,7 +113,7 @@ def get_thoth_s2i_images() -> List[str]:
     try:
         response.raise_for_status()
     except Exception as exc:
-        raise S2I2ThothException("Failed to obtain Thoth's s2i images from GitHub") from exc
+        raise S2I2ThothExceptionError("Failed to obtain Thoth's s2i images from GitHub") from exc
 
     return sorted(set(_RE_S2I.findall(response.text)), reverse=True)
 
@@ -125,7 +125,7 @@ def oc_get_bc(namespace: str, selector: Optional[str] = None, path: str = "build
         try:
             Path(path).touch()
         except Exception as exc:
-            raise S2I2ThothException(f"Cannot create file {path} for storing buildconfigs") from exc
+            raise S2I2ThothExceptionError(f"Cannot create file {path} for storing buildconfigs") from exc
 
     cmd = ["oc", "get", "bc", "--namespace", namespace, "-o", "yaml"]
 
@@ -146,7 +146,7 @@ def oc_get_is(namespace: str, selector: Optional[str] = None, path: str = "image
         try:
             Path(path).touch()
         except Exception as exc:
-            raise S2I2ThothException(f"Cannot create file {path} for storing imagestreams") from exc
+            raise S2I2ThothExceptionError(f"Cannot create file {path} for storing imagestreams") from exc
 
     cmd = ["oc", "get", "is", "--namespace", namespace, "-o", "yaml"]
 
